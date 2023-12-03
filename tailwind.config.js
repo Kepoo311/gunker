@@ -2,7 +2,11 @@
 module.exports = {
   content: ['./public/**/*.{html,js,php}'],
   theme: {
-    extend: {},
+    extend: {
+      backgroundPosition:{
+        'gatau' : '50% 50%',
+      }
+    },
   },
   plugins: [],
 }

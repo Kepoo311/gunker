@@ -1,4 +1,7 @@
 <?php
+
+require "../src/Koneksi.php";
+
 session_start();
 $emot = ["✌️", "🤜", "🫱"];
 $random = $emot[rand(0, 2)];
@@ -16,8 +19,13 @@ if (!isset($_SESSION['scplyr'])) {
     $_SESSION['scplyr'] = 0;
 }
 
+if (!isset($_SESSION['ws'])) {
+    $_SESSION['ws'] = 0;
+}
+
 if(isset($_POST["back"])){
-    session_destroy();
+    $_SESSION['scbot'] = 0;
+    $_SESSION['scplyr'] = 0;
     header("Location: index.php");
 }
 
@@ -67,14 +75,16 @@ if (isset($input)) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1 class="text-3xl font-bold text-blue-500 text-center mt-3 cursor-grab hover:underline">Gunting Batu Kertas!</h1>
+<body style="background-image: url('./img/BGG.png');" class="bg-cover bg-no-repeat h-full">
+    <div class="mt-52">
+    <h1 class="text-3xl font-bold text-white text-center mt-3 cursor-grab hover:underline">Gunting Batu Kertas!</h1>
 
-    <div class="container mt-5 mx-auto text-center bg-red-400 w-36 text-white">
+    <div class="container mt-5 mx-auto text-center bg-red-400 w-52 text-white">
         <p>Score </p>
         <p>Bot :
             <?= $_SESSION['scbot'] ?> | You :
-            <?= $_SESSION['scplyr'] ?>
+            <?= $_SESSION['scplyr'] ?> | WS :
+            <?= $_SESSION['ws'] ?> Kali!
         </p>
     </div>
 
@@ -131,6 +141,7 @@ if (isset($input)) {
             </form>
         </div>
         <?php
+        $_SESSION['ws'] = 0;
         $_SESSION['scbot'] = 0;
         $_SESSION['scplyr'] = 0;
         ?>
@@ -145,6 +156,7 @@ if (isset($input)) {
             </form>
         </div>
         <?php
+        $_SESSION['ws']++;
         $_SESSION['scbot'] = 0;
         $_SESSION['scplyr'] = 0;
         ?>
@@ -161,6 +173,9 @@ if (isset($input)) {
         </form>
     <?php endif; ?>
 </body>
+</div>
+
+
 <script src="https://kit.fontawesome.com/65fd5af23f.js" crossorigin="anonymous"></script>
 <script>
     // JavaScript function to reset the game and reload the page
